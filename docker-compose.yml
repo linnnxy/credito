@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  mariadb:
+    image: mariadb:10.5
+    container_name: mariadb-creditos
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: root
+      MARIADB_DATABASE: creditosdb
+      MARIADB_USER: creditos_user
+      MARIADB_PASSWORD: creditos_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  mariadb_data:
